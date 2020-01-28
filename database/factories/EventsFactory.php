@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Event;
 use App\User;
 use Faker\Generator as Faker;
 
@@ -16,13 +17,12 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
-    $items = ['USER', 'ADMIN'];
-
+$factory->define(Event::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'role' => $items[array_rand(['USER', 'ADMIN'], 1)]
+        'title' => $faker->word,
+        'description' => $faker->sentence(),
+        'freemium' => $faker->boolean(40),
+        'createdBy' => factory(User::class)->create()->id,
+        'activeDate' => $faker->dateTime(),
     ];
 });
