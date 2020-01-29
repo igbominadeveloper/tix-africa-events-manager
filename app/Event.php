@@ -17,4 +17,12 @@ class Event extends Model
     protected $casts = [
         'activeDate' => 'datetime',
     ];
+
+    protected $fillable = [
+        'title',
+        'description',
+        'freemium',
+        'activeDate',
+        'createdBy'
+    ];
 }

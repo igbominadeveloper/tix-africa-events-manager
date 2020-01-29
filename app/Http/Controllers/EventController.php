@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        return view('events.index')->with('events',Event::orderBy('created_at', 'desc')->get());
     }
 
     /**
@@ -24,7 +30,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view('events.create');
     }
 
     /**
@@ -35,7 +41,23 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+    $validatedBody = $request->validate([
+            'title' => 'required|min:5|string',
+            'description' => 'required|min:5|string',
+            'freemium' => 'required|boolean',
+            'activeDate' => 'required|date'
+        ]);
+
+        Event::create([
+            'title' => $validatedBody['title'],
+            'description' => $validatedBody['description'],
+            'freemium' => $validatedBody['freemium'],
+            'activeDate' => $validatedBody['activeDate'],
+            'createdBy' => Auth::id()
+        ]);
+
+        return redirect('/events');
     }
 
     /**
