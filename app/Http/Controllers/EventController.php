@@ -68,7 +68,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+
     }
 
     /**
@@ -79,19 +79,30 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        return view('events.edit')->with('event', $event);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Event $event)
     {
-        //
+
+        $validatedBody = $request->validate([
+            'title' => 'required|min:5|string',
+            'description' => 'required|min:5|string',
+            'freemium' => 'required|boolean',
+            'activeDate' => 'required|date',
+            'isActive' => 'required|boolean',
+        ]);
+
+        $event->update($validatedBody);
+
+        return redirect(route('events.index'));
     }
 
     /**
@@ -102,6 +113,7 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        return redirect(route('events.index'));
     }
 }

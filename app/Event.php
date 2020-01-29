@@ -23,6 +23,7 @@ class Event extends Model
         'description',
         'freemium',
         'activeDate',
-        'createdBy'
+        'createdBy',
+        'isActive'
     ];
 }
