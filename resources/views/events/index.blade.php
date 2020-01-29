@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-10">
         <h2>Events</h2>
-        <a class="btn btn-primary" href="/events/create">Create Event</a>
+        <a class="btn btn-primary" href="/events/create">Create New Event</a>
         <br>
         <div class="row">
             @foreach($events as $event)
